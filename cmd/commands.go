@@ -10,6 +10,7 @@ import (
 func LookUpDomain() *cobra.Command {
 	return &cobra.Command{
 		Use: 		"domain",
+		Short: 		"Looks up IPv4 and IPv6 addresses of a given host",
 		ValidArgs:  []string{"www.google.com"},
 		RunE: func(cmd *cobra.Command, args[] string) error {
 			domain := args[0]
@@ -31,6 +32,7 @@ func LookUpDomain() *cobra.Command {
 func LookUpNameServices() *cobra.Command {
 	return &cobra.Command{
 		Use: "ns", 
+		Short: "Looks up the name services for a particular host",
 		RunE: func(cmd *cobra.Command, args[] string) error {
 			domain := args[0]
 			res, _ := net.LookupNS(domain)
@@ -45,6 +47,22 @@ func LookUpNameServices() *cobra.Command {
 	}
 }
 
+// ReverseLookUpAddress - Returns the CNAME for a domain by using 
+func ReverseLookUpAddress() *cobra.Command {
+	return &cobra.Command {
+		Use: 	"rv", 
+		Short: "Performs a Reverse Lookup for a given host",
+		RunE: func(cmd *cobra.Command, args[] string) error {
+			domain := args[0]
+			res, err := net.LookupCNAME(domain)
+
+			if err != nil { log.Println(err) }
+			cmd.Println(res)
+
+			return nil
+		},
+	}
+}
 
 
 

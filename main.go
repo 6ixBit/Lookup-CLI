@@ -19,6 +19,7 @@ func main() {
 	// Attach subcommands to main parent command
 	cmd.AddCommand(comm.LookUpDomain())
 	cmd.AddCommand(comm.LookUpNameServices())
+	cmd.AddCommand(comm.ReverseLookUpAddress())
 
 	if err := cmd.Execute(); err != nil {
 		log.Println(err)
